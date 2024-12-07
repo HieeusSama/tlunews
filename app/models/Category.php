@@ -1,33 +1,24 @@
-<?php
-    class Category
-    {
-        public $id;
-        public $name;
+<?php 
+    class Category {
+        private $id;
+        private $name;
+
         public function __construct($id, $name)
         {
-            $this->id = $id;
-            $this->name = $name;
+            $this->id = $id;   
+            $this->name = $name;   
         }
-        
-        public function getId() {
+
+        public function getId(){
             return $this->id;
         }
-    
-        // Setter cho $id
-        public function setId($id) {
-            $this->id = $id;
-        }
-    
-        // Getter cho $name
-        public function getName() {
+
+        public function getName(){
             return $this->name;
         }
-    
-        // Setter cho $name
-        public function setName($name) {
+
+        public function Name($name){
             $this->name = $name;
         }
     }
-    
-    
-    
+?>
