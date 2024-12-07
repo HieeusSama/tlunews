@@ -1,4 +1,5 @@
 <?php
+define('APP_ROOT', dirname(__FILE__,3));
 class Database {
     private $host = 'localhost';
     private $db = 'tintuc';
@@ -6,7 +7,7 @@ class Database {
     private $pass = '';
     public $conn;
 
-    public function getConnection() {
+    public function getConnect() {
         $this->conn = null;
         try {
             $this->conn = new PDO("mysql:host=$this->host;dbname=$this->db", $this->user, $this->pass);

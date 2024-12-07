@@ -1,5 +1,6 @@
 <?php
-require_once('./controllers/HomeController.php');
+    require_once('../tlunews/configs/database.php');
 
-$homeController = new HomeController();
+    $database = new Database();
+    $database->getConnect();
 ?>
