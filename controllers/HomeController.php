@@ -1,12 +1,11 @@
 <?php
-require_once('./configs/database.php');
-require_once('./models/User.php');
-
-class HomeController {
-    private $model;
-
-    public function __construct() {
-        $this->model = new User();
+require_once APP_ROOT.'/app/services/NewsService.php';
+    class HomeController {
+        public function index(){
+            $n = new NewsService();
+            $news = $n->getAllNews();
+            $categories = $n->getAllCategories();
+            include APP_ROOT."/app/views/home/index.php";
+        }
     }
-}
 ?>
