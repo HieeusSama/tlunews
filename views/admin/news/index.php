@@ -1,65 +1,54 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản lý bài viết</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Danh sách tin tức</title>
 </head>
 <body>
-    <header class="bg-dark text-white py-3">
-        <div class="container">
-            <h1>Quản lý bài viết</h1>
-            <nav>
-                <ul class="nav">
-                    <li class="nav-item"><a href="index.php?page=admin&action=dashboard" class="nav-link text-white">Bảng điều khiển</a></li>
-                    <li class="nav-item"><a href="index.php?page=admin&action=news" class="nav-link text-white">Danh sách bài viết</a></li>
-                    <li class="nav-item"><a href="index.php?page=admin&action=logout" class="nav-link text-white">Đăng xuất</a></li>
-                </ul>
-            </nav>
+<div class="container mt-5">
+    <h1 class="mb-4">Danh sách tin tức</h1>
+
+    <!-- Bộ lọc danh mục -->
+    <form method="GET" action="" class="mb-4">
+    <input type="hidden" name="controller" value="news">
+    <input type="hidden" name="action" value="category">
+    <div class="row">
+        <div class="col-md-4">
+            <select name="category_id" class="form-select" onchange="this.form.submit()">
+                <option value="" disabled selected>Chọn danh mục</option>
+                <?php foreach ($categories as $category): ?>
+                    <option value="<?= $category->getID(); ?>" 
+                        <?= (isset($_GET['category_id']) && $_GET['category_id'] == $category->getID()) ? 'selected' : ''; ?>>
+                        <?= htmlspecialchars($category->getName()); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
         </div>
-    </header>
-    <main class="container mt-4">
-        <div class="d-flex justify-content-between align-items-center">
-            <h2>Danh sách bài viết</h2>
-            <a href="index.php?page=admin&action=news&method=add" class="btn btn-success">Thêm bài viết</a>
-        </div>
-        <table class="table table-striped mt-3">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Tiêu đề</th>
-                    <th>Tác giả</th>
-                    <th>Ngày đăng</th>
-                    <th>Hành động</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Bài viết mẫu 1</td>
-                    <td>Admin</td>
-                    <td>2024-12-06</td>
-                    <td>
-                        <a href="index.php?page=admin&action=news&method=edit&id=1" class="btn btn-warning btn-sm">Sửa</a>
-                        <a href="index.php?page=admin&action=news&method=delete&id=1" class="btn btn-danger btn-sm">Xóa</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Bài viết mẫu 2</td>
-                    <td>Admin</td>
-                    <td>2024-12-06</td>
-                    <td>
-                        <a href="index.php?page=admin&action=news&method=edit&id=2" class="btn btn-warning btn-sm">Sửa</a>
-                        <a href="index.php?page=admin&action=news&method=delete&id=2" class="btn btn-danger btn-sm">Xóa</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </main>
-    <footer class="bg-dark text-white text-center py-3 mt-4">
-        <p>Bản quyền © 2024 TLU News</p>
-    </footer>
+    </div>
+</form>
+
+    <!-- Danh sách tin tức -->
+    <div class="row">
+        <?php if (empty($news)): ?>
+            <p>Không có tin tức nào thuộc danh mục này.</p>
+        <?php else: ?>
+            <?php foreach ($news as $item): ?>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="<?= PATH.$item->getImage(); ?>" class="card-img-top" alt="Ảnh tin tức">
+                        <div class="card-body">
+                            <h5 class="card-title"><?= $item->getTitle(); ?></h5>
+                            <a href="index.php?controller=news&action=detail&id=<?= $item->getId(); ?>" class="btn btn-primary">Xem chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+</div>
 </body>
 </html>
+

@@ -1,34 +1,55 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TLU News - Trang Chủ</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Danh sách tin tức</title>
 </head>
 <body>
-    <header class="bg-primary text-white py-3">
-        <div class="container">
-            <h1>TLU News</h1>
-            <nav>
-                <ul class="nav">
-                    <li class="nav-item"><a href="index.php?page=home&action=index" class="nav-link text-white">Trang chủ</a></li>
-                    <li class="nav-item"><a href="index.php?page=news&action=list" class="nav-link text-white">Tin tức</a></li>
-                    <li class="nav-item"><a href="index.php?page=admin&action=login" class="nav-link text-white">Admin</a></li>
-                </ul>
-            </nav>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Danh sách tin tức</h1>
+        <a href="index.php?controller=auth&login" class="btn btn-primary">Đăng nhập</a>
+    </div>
+
+    <form method="GET" action="" class="mb-4">
+    <input type="hidden" name="controller" value="news">
+    <input type="hidden" name="action" value="category">
+    <div class="row">
+        <div class="col-md-4">
+            <select name="category_id" class="form-select" onchange="this.form.submit()">
+                <option value="" disabled selected>Chọn danh mục</option>
+                <?php foreach ($categories as $category): ?>
+                    <option value="<?= $category->getID(); ?>" 
+                        <?= (isset($_GET['category_id']) && $_GET['category_id'] == $category->getID()) ? 'selected' : ''; ?>>
+                        <?= htmlspecialchars($category->getName()); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
         </div>
-    </header>
-    <main class="container mt-4">
-        <h2>Danh sách tin tức</h2>
-        <ul class="list-group">
-            <li class="list-group-item"><a href="index.php?page=news&action=detail&id=1">Bài viết 1</a></li>
-            <li class="list-group-item"><a href="index.php?page=news&action=detail&id=2">Bài viết 2</a></li>
-            <li class="list-group-item"><a href="index.php?page=news&action=detail&id=3">Bài viết 3</a></li>
-        </ul>
-    </main>
-    <footer class="bg-dark text-white text-center py-3 mt-4">
-        <p>Bản quyền © 2024 TLU News</p>
-    </footer>
+    </div>
+</form>
+
+    <!-- Danh sách tin tức -->
+    <div class="row">
+        <?php if (empty($news)): ?>
+            <p>Không có tin tức nào thuộc danh mục này.</p>
+        <?php else: ?>
+            <?php foreach ($news as $item): ?>
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="<?= PATH.$item->getImage(); ?>" class="card-img-top" alt="Ảnh tin tức">
+                        <div class="card-body">
+                            <h5 class="card-title"><?= $item->getTitle(); ?></h5>
+                            <a href="index.php?controller=news&action=detail&id=<?= $item->getId(); ?>" class="btn btn-primary">Xem chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+</div>
 </body>
 </html>
