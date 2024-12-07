@@ -43,7 +43,7 @@
    define('DB_PASS', '');
    define('DB_NAME', 'tintuc');
    ```
-6. Truy cập ứng dụng tại [http://localhost/tlunews/public](http://localhost/tlunews).
+6. Truy cập ứng dụng tại [http://localhost/tlunews/public/](http://localhost/tlunews).
 
 ---
 **Nhóm 7 xin chân thành cảm ơn sự quan tâm và hỗ trợ từ mọi người!**
